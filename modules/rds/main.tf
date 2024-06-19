@@ -13,7 +13,7 @@ locals {
 }
 
 resource "aws_db_instance" "mariadb" {
-  identifier        = local.secret.dbInstanceIdentifier #"tokyo-db01"
+  identifier        = local.secret.dbInstanceIdentifier
   engine            = local.secret.engine
   engine_version    = "10.6.14"
   instance_class    = "db.t3.micro"
