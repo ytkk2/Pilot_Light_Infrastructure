@@ -12,6 +12,7 @@ resource "aws_db_instance" "mariadb" {
 
   username            = "admin"
   password            = "password"
+  db_name = "wordpress"
   skip_final_snapshot = true
 }
 

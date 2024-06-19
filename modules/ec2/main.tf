@@ -11,7 +11,9 @@ resource "aws_instance" "web_instance" {
               sudo dnf -y install docker
               sudo systemctl enable docker
               sudo systemctl start docker
-              sudo docker run -p80:80 -d -v /home/ssm-user/wordpress:/var/www/html --restart always wordpress
+              sudo docker run -p80:80 -d \
+              -v /home/ssm-user/wordpress:/var/www/html \
+              --restart always wordpress
               EOF
 
   tags = {
