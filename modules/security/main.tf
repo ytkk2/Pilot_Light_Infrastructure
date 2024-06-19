@@ -1,7 +1,7 @@
 resource "aws_security_group" "alb_sg" {
   name        = "alb-security-group"
   description = "ALB security group"
-  vpc_id      = var.vpc_id #.vpc01.id
+  vpc_id      = var.vpc_id
 
   ingress {
     from_port   = 80
@@ -21,7 +21,7 @@ resource "aws_security_group" "alb_sg" {
 resource "aws_security_group" "ec2_sg" {
   name        = "ec2-security-group"
   description = "EC2 security group"
-  vpc_id      = var.vpc_id #.vpc01.id
+  vpc_id      = var.vpc_id
 
   ingress {
     from_port       = 80
@@ -37,6 +37,7 @@ resource "aws_security_group" "ec2_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
 
 resource "aws_security_group" "db_sg" {
   name        = "db-security-group"

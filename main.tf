@@ -16,7 +16,7 @@ module "rds" {
 }
 module "ec2" {
   source            = "./modules/ec2"
-  instance_count    = 3
+  instance_count    = 2
   subnets           = module.network.private_subnet_web_ids
   security_group_id = module.security.ec2_sg_id
 }

@@ -7,6 +7,7 @@ resource "aws_lb" "alb" {
 
   enable_deletion_protection = false
 }
+
 resource "aws_lb_target_group" "tg" {
   name     = "web-tg"
   port     = 80
@@ -15,7 +16,7 @@ resource "aws_lb_target_group" "tg" {
 
   health_check {
     path                = "/"
-    interval            = 10
+    interval            = 30
     timeout             = 5
     healthy_threshold   = 2
     unhealthy_threshold = 2
