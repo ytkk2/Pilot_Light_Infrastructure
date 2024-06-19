@@ -2,8 +2,8 @@ resource "aws_instance" "web_instance" {
   count           = var.instance_count
   ami             = "ami-0f9fe1d9214628296"
   instance_type   = "t3.micro"
-  subnet_id       = var.subnets[0]
-  security_groups = [var.security_group_id]
+  subnet_id       = var.subnets[count.index]
+  vpc_security_group_ids = [var.security_group_id]
 
   user_data = <<-EOF
               #!/bin/bash
@@ -11,7 +11,7 @@ resource "aws_instance" "web_instance" {
               sudo dnf -y install docker
               sudo systemctl enable docker
               sudo systemctl start docker
-              sudo docker run -p80:80 -d \
+              sudo docker run -p 80:80 -d \
               -v /home/ssm-user/wordpress:/var/www/html \
               --restart always wordpress
               EOF

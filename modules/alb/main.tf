@@ -36,7 +36,7 @@ resource "aws_lb_listener" "front_end" {
 }
 
 resource "aws_lb_target_group_attachment" "ec2_targets" {
-  count            = var.instance_count
+  count            = length(var.aws_instance_ids)
   target_group_arn = aws_lb_target_group.tg.arn
   target_id        = element(var.aws_instance_ids, count.index)
   port             = 80
