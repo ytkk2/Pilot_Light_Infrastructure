@@ -2,7 +2,7 @@ resource "aws_instance" "web_instance" {
   count           = var.instance_count
   ami             = "ami-0f9fe1d9214628296"
   instance_type   = "t3.micro"
-  subnet_id       = var.subnets[count.index]
+  subnet_id       = var.subnets[0]
   security_groups = [var.security_group_id]
 
   user_data = <<-EOF
@@ -19,9 +19,9 @@ resource "aws_instance" "web_instance" {
 }
 
 resource "aws_launch_configuration" "web_lc" {
-  name_prefix   = "web-lc-"
-  image_id      = "ami-0f9fe1d9214628296"
-  instance_type = "t3.micro"
+  name_prefix     = "web-lc-"
+  image_id        = "ami-0f9fe1d9214628296"
+  instance_type   = "t3.micro"
   security_groups = [var.security_group_id]
 
   lifecycle {

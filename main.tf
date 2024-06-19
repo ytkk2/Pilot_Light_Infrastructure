@@ -16,14 +16,17 @@ module "rds" {
 }
 module "ec2" {
   source            = "./modules/ec2"
-  instance_count = 2
+  instance_count    = 3
   subnets           = module.network.private_subnet_web_ids
   security_group_id = module.security.ec2_sg_id
 }
 
-# module "alb" {
-#   source            = "./modules/alb"
-#   subnets           = module.network.public_subnet_ids
-#   security_group_id = module.security.alb_sg_id
-# }
+module "alb" {
+  source            = "./modules/alb"
+  vpc_id            = module.network.vpc_id
+  subnet_ids        = module.network.public_subnet_ids
+  security_group_id = module.security.alb_sg_id
+  aws_instance_ids  = module.ec2.aws_web_instance_ids
+  instance_count    = 3
+}
 
