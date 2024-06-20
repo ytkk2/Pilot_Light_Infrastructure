@@ -28,10 +28,11 @@
 - DBサブネットグループの設定
 - Secrets Managerを使用したDBパスワードの管理
 
-### Route53 (route53 module)
+### Route53 (route53 module)[^1]
 - ホストゾーンの作成
 - ALBのDNSエイリアスレコードの設定
-* ご自身のドメイン名に変更して下さい
+
+[^1]:ご自身のドメイン名に変更して下さい
 
 ### CloudTrail (cloudtrail module)
 - CloudTrailの設定
