@@ -1,18 +1,11 @@
 resource "aws_instance" "web_instance" {
   count           = var.instance_count
-  ami             = "ami-0f9fe1d9214628296"
-  instance_type   = "t3.micro"
+  ami             = var.instance_count
+  instance_type   = var.ami_id
   subnet_id       = element(var.subnets, count.index)
   vpc_security_group_ids = [var.security_group_id]
 
-  user_data = <<-EOF
-              #!/bin/bash
-              sudo dnf -y update
-              sudo dnf -y install docker
-              sudo systemctl enable docker
-              sudo systemctl start docker
-              sudo docker run -p 80:80 -d -v /home/ssm-user/wordpress:/var/www/html --restart always wordpress
-              EOF
+  user_data = var.user_data_script
 
   tags = {
     Name = "web-instance-${count.index}"
@@ -21,8 +14,8 @@ resource "aws_instance" "web_instance" {
 
 resource "aws_launch_configuration" "web_lc" {
   name_prefix     = "web-lc-"
-  image_id        = "ami-0f9fe1d9214628296"
-  instance_type   = "t3.micro"
+  image_id        = var.ami_id
+  instance_type   = var.instance_type
   security_groups = [var.security_group_id]
 
   lifecycle {

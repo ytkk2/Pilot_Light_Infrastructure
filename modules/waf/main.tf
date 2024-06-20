@@ -1,5 +1,5 @@
 resource "aws_wafv2_web_acl" "web_acl" {
-  name        = "rate-base-web-acl"
+  name        = var.waf_name
   description = "Web ACL to block IPs with more than 10 requests per minute"
   scope       = "REGIONAL"
 
@@ -8,7 +8,7 @@ resource "aws_wafv2_web_acl" "web_acl" {
   }
 
   rule {
-    name     = "rate-limit-rule"
+    name     = var.rate_limit_rule_name
     priority = 1
 
     action {
@@ -18,20 +18,20 @@ resource "aws_wafv2_web_acl" "web_acl" {
     statement {
       rate_based_statement {
         limit              = var.rate_limit
-        aggregate_key_type = "IP"
+        aggregate_key_type = var.aggregate_key_type
 
         scope_down_statement {
           byte_match_statement {
-            search_string = "/"
-            positional_constraint = "CONTAINS"
+            search_string = var.search_string
+            positional_constraint = var.positional_constraint
 
             field_to_match {
               uri_path {}
             }
 
             text_transformation {
-              priority = 0
-              type     = "NONE"
+              priority = var.text_transformation_priority
+              type     = var.text_transformation_type
             }
           }
         }
@@ -40,7 +40,7 @@ resource "aws_wafv2_web_acl" "web_acl" {
     
     visibility_config {
       cloudwatch_metrics_enabled = true
-      metric_name                = "rate-limit-rule"
+      metric_name                = var.rate_limit_rule_name
       sampled_requests_enabled   = true
     }
   }
@@ -51,9 +51,7 @@ resource "aws_wafv2_web_acl" "web_acl" {
     sampled_requests_enabled   = true
   }
 
-  tags = {
-    Name = "rate-base-web-acl"
-  }
+  tags = var.waf_tags
 }
 
 resource "aws_wafv2_web_acl_association" "example" {

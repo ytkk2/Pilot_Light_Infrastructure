@@ -9,7 +9,7 @@ resource "aws_cloudtrail" "logging" {
 
   name                          = var.cloudtrail_name
   s3_bucket_name                = aws_s3_bucket.for_cloudtrail.id
-  s3_key_prefix                 = "prefix"
+  s3_key_prefix                 = var.s3_key_prefix
   include_global_service_events = true
 }
 
@@ -30,11 +30,6 @@ data "aws_iam_policy_document" "cloudtrail_acl" {
 
     actions   = ["s3:GetBucketAcl"]
     resources = [aws_s3_bucket.for_cloudtrail.arn]
-    # condition {
-    #   test     = "ArnLike"
-    #   variable = "aws:SourceArn"
-    #   values   = ["arn:${data.aws_partition.current.partition}:cloudtrail:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:trail/example"]
-    # }
   }
 
   statement {
@@ -54,11 +49,6 @@ data "aws_iam_policy_document" "cloudtrail_acl" {
       variable = "s3:x-amz-acl"
       values   = ["bucket-owner-full-control"]
     }
-    # condition {
-    #   test     = "ArnLike"
-    #   variable = "aws:SourceArn"
-    #   values   = ["arn:${data.aws_partition.current.partition}:cloudtrail:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:trail/example"]
-    # }
   }
 }
 

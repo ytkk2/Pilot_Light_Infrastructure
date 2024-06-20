@@ -10,7 +10,7 @@ module "security" {
 
 module "route53" {
   source       = "./modules/route53"
-  domain_name  = "terraformwordpress.com"
+  domain_name  = var.domain_name
   alb_dns_name = module.alb.dns_name
   alb_zone_id  = module.alb.zone_id
 }
@@ -21,7 +21,7 @@ module "alb" {
   subnet_ids        = module.network.public_subnet_ids
   security_group_id = module.security.alb_sg_id
   aws_instance_ids  = module.ec2.aws_web_instance_ids
-  instance_count    = 2
+  instance_count    = var.instance_count
 }
 
 module "rds" {
@@ -32,19 +32,19 @@ module "rds" {
 }
 module "ec2" {
   source            = "./modules/ec2"
-  instance_count    = 2
+  instance_count    = var.instance_count
   subnets           = module.network.private_subnet_web_ids
   security_group_id = module.security.ec2_sg_id
 }
 
 module "cloudtrail" {
   source          = "./modules/cloudtrail"
-  bucket_name     = "s3-bucket-for-cloudtrail"
-  cloudtrail_name = "cloudtrail-for-logging"
+  bucket_name     = var.bucket_name
+  cloudtrail_name = var.cloudtrail_name
 }
 
 module "waf" {
   source     = "./modules/waf"
   alb_arn    = module.alb.alb_arn
-  rate_limit = 100
+  rate_limit = var.rate_limit
 }

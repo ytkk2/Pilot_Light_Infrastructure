@@ -12,3 +12,15 @@ variable "alb_zone_id" {
   description = "The Zone ID of the ALB"
   type        = string
 }
+
+variable "subdomain_name" {
+  description = "The subdomain name to use for the Route 53 record"
+  type        = string
+  default     = "www"
+}
+
+variable "record_type" {
+  description = "The DNS record type"
+  type        = string
+  default     = "A"
+}

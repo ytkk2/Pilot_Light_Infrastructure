@@ -15,10 +15,10 @@ locals {
 resource "aws_db_instance" "mariadb" {
   identifier        = local.secret.dbInstanceIdentifier
   engine            = local.secret.engine
-  engine_version    = "10.6.14"
-  instance_class    = "db.t3.micro"
-  allocated_storage = 20
-  storage_type      = "gp2"
+  engine_version    = var.engine_version
+  instance_class    = var.instance_class
+  allocated_storage = var.allocated_storage
+  storage_type      = var.storage_type
 
   db_subnet_group_name   = aws_db_subnet_group.db_subnet_group.name
   vpc_security_group_ids = [var.security_group_id]

@@ -17,3 +17,33 @@ variable "web_subnets" {
 variable "db_subnets" {
   default = ["10.0.101.0/24", "10.0.102.0/24"]
 }
+
+variable "domain_name" {
+  description = "The domain name for the Route 53 zone"
+  type        = string
+  default     = "terraformwordpress.com"
+}
+
+variable "bucket_name" {
+  description = "The name of the S3 bucket for CloudTrail logs"
+  type        = string
+  default     = "s3-bucket-for-cloudtrail"
+}
+
+variable "cloudtrail_name" {
+  description = "The name of the CloudTrail"
+  type        = string
+  default     = "cloudtrail-for-logging"
+}
+
+variable "instance_count" {
+  description = "The number of EC2 instances"
+  type        = number
+  default     = 2
+}
+
+variable "rate_limit" {
+  description = "The rate limit for WAF"
+  type        = number
+  default     = 100
+}

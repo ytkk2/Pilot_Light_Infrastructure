@@ -4,17 +4,17 @@ resource "aws_security_group" "alb_sg" {
   vpc_id      = var.vpc_id
 
   ingress {
-    from_port   = 80
-    to_port     = 80
+    from_port   = var.ingress_http_port
+    to_port     = var.ingress_http_port
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = var.cidr_blocks
   }
 
   egress {
-    from_port   = 0
-    to_port     = 0
+    from_port   = var.egress_all_ports
+    to_port     = var.egress_all_ports
     protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = var.cidr_blocks
   }
 }
 
@@ -24,17 +24,17 @@ resource "aws_security_group" "ec2_sg" {
   vpc_id      = var.vpc_id
 
   ingress {
-    from_port       = 80
-    to_port         = 80
+    from_port       = var.ingress_http_port
+    to_port         = var.ingress_http_port
     protocol        = "tcp"
     security_groups = [aws_security_group.alb_sg.id]
   }
 
   egress {
-    from_port   = 0
-    to_port     = 0
+    from_port   = var.egress_all_ports
+    to_port     = var.egress_all_ports
     protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = var.cidr_blocks
   }
 }
 
@@ -42,18 +42,18 @@ resource "aws_security_group" "ec2_sg" {
 resource "aws_security_group" "db_sg" {
   name        = "db-security-group"
   description = "Database security group"
-  vpc_id      = var.vpc_id #.vpc01.id
+  vpc_id      = var.vpc_id
 
   ingress {
-    from_port       = 3306
-    to_port         = 3306
+    from_port       = var.ingress_db_port
+    to_port         = var.ingress_db_port
     protocol        = "tcp"
     security_groups = [aws_security_group.ec2_sg.id]
   }
     egress {
-    from_port   = 0
-    to_port     = 0
+    from_port   = var.egress_all_ports
+    to_port     = var.egress_all_ports
     protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = var.cidr_blocks
   }
 }
