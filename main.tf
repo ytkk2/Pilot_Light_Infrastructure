@@ -27,6 +27,17 @@ module "alb" {
   subnet_ids        = module.network.public_subnet_ids
   security_group_id = module.security.alb_sg_id
   aws_instance_ids  = module.ec2.aws_web_instance_ids
-  instance_count    = 3
+  instance_count    = 2
 }
 
+module "cloudtrail" {
+  source          = "./modules/cloudtrail"
+  bucket_name     = "s3-bucket-for-cloudtrail"
+  cloudtrail_name = "cloudtrail-for-logging"
+}
+
+module "waf" {
+  source     = "./modules/waf"
+  alb_arn    = module.alb.alb_arn
+  rate_limit = 100
+}
