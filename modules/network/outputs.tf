@@ -3,7 +3,7 @@ output "vpc_id" {
   description = "The ID of the VPC"
 }
 output "private_subnet_db_ids" {
-  value       = [for s in aws_subnet.private_subnet_db : s.id]
+  value       = [for subnet in aws_subnet.private_subnet_db : subnet.id]
   description = "List of IDs of private DB subnets"
 }
 output "public_route_table_name" {
@@ -11,9 +11,9 @@ output "public_route_table_name" {
   description = "The name of the public route table"
 }
 output "private_subnet_web_ids" {
-  value       = [for s in aws_subnet.private_subnet_web : s.id]
+  value       = [for subnet in aws_subnet.private_subnet_web : subnet.id]
   description = "List of IDs of private web subnets"
 }
 output "public_subnet_ids" {
-  value = [for s in aws_subnet.public_subnet : s.id]
+  value = [for subnet in aws_subnet.public_subnet : subnet.id]
 }
