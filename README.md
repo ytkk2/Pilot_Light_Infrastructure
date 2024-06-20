@@ -31,6 +31,7 @@
 ### Route53 (route53 module)
 - ホストゾーンの作成
 - ALBのDNSエイリアスレコードの設定
+* ご自身のドメイン名に変更して下さい
 
 ### CloudTrail (cloudtrail module)
 - CloudTrailの設定
