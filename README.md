@@ -1,6 +1,6 @@
 # AWSを用いたWeb三層アーキテクチャのTerraform構築
 
-このリポジトリは、AWSを用いてWeb三層アーキテクチャをTerraformで構築するための設定ファイルを含んでいます。構成はネットワーク、セキュリティ、ALB、EC2、RDS、Route53、CloudTrail、WAFモジュールを組み合わせて実現されています。
+このリポジトリは、AWSを用いてWeb三層アーキテクチャをTerraformで構築するための設定ファイルを含んでいます。構成はNetwork、Security、ALB、EC2、RDS、Route53、CloudTrail、WAFモジュールを組み合わせて実現されています。
 
 ## 構成要素
 
